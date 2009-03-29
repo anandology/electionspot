@@ -1,0 +1,74 @@
+{
+    "id": "ap/srikakulam",
+    "state": {
+        "id": "ap",
+        "name": "Andhra Pradesh"
+    },
+    "name": "Srikakulam",
+    "stats": {
+        "numvoters": 723770,
+        "ratio_of_male_female_voters": 0.998,
+        "percentage_literacy": 87.65
+    },
+    "upcoming_elections": {
+        "date": "2009-04-14",
+        "candidates": [{
+            "id": "candidate/yerrannaidu_kinjarapu",
+            "name": "Yerrannaidu Kinjarapu",
+            "party": {
+                "id": "party/TDP",
+                "shortname": "TDP",
+                "name": "Telugu Desam Party"
+            }
+        }]
+    },
+    "election_history": [{
+        "date": "2004",
+        "numvoters": 723770,        
+        "candidates": [{
+            "id": "candidate/yerrannaidu_kinjarapu",
+            "name": "Yerrannaidu Kinjarapu",
+            "party": {
+                "id": "party/TDP",
+                "shortname": "TDP",
+                "name": "Telugu Desam Party"
+            },
+            "status": "winner",
+            "percentage_votes": 50
+        }, {
+            "id": "killi_kruparani",
+            "name": "Killi Kruparani",
+            "party": {
+                "id": "party/INC",
+                "shortname": "INC",
+                "name": "Indian National Congress"
+            },
+            "status": "runnerup",
+            "percentage_votes": 45.6
+        }]
+    }, {
+        "date": "1999",
+        "numvoters": 676410,
+        "candidates": [{
+            "id": "candidate/yerrannaidu_kinjarapu",
+            "name": "Yerrannaidu Kinjarapu",
+            "party": {
+                "id": "party/TDP",
+                "shortname": "TDP",
+                "name": "Telugu Desam Party"
+            },
+            "status": "winner",
+            "percentage_votes": 56.81
+        }, {
+            "id": "kanithi_viswanadaham",
+            "name": "Kanithi Viswanadaham",
+            "party": {
+                "id": "party/INC",
+                "shortname": "INC",
+                "name": "Indian National Congress"
+            },
+            "status": "runnerup",
+            "percentage_votes": 42.09
+        }]
+    }]
+}
