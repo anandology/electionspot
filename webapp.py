@@ -1,5 +1,6 @@
 import web
 
+import utils
 import db
 
 urls = (
@@ -11,7 +12,8 @@ urls = (
 )
 
 app = web.application(urls, globals())
-render = web.template.render("templates", base="layout")
+app.add_processor(web.loadhook(utils.json_processor))
+render = utils.Render("templates", base="layout")
 
 class home:
     def GET(self):
