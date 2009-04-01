@@ -2,10 +2,18 @@ $def with (page)
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />    
+	<link rel="stylesheet" href="/static/css/layout.css" />
     <title>$page.get("title", "Welcome") - Electionspot</title>
 </head>
 <body>
+	<div id="header">
     <h1><a href="/">Electionspot</a></h1>
+	</div>
+	<div id="content">
     $:page
+	</div>
+	<div id="footer">
+
+	</div>
 </body>
 </html>
