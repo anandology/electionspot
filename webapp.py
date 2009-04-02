@@ -13,7 +13,10 @@ urls = (
 
 app = web.application(urls, globals())
 app.add_processor(web.loadhook(utils.json_processor))
-render = utils.Render("templates", base="layout")
+
+
+tglobals = dict(maproot="http://122.170.127.7/KMAP")
+render = utils.Render("templates", base="layout", globals=tglobals)
 
 class home:
     def GET(self):

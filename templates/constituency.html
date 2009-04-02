@@ -2,6 +2,9 @@ $def with (d)
 
 $var title: $d.name
 
+<iframe id="map" src="$maproot/map">
+</iframe>
+
 <div id="heading">
 <h2>$d.name Parliamentary Constituency</h2>
 </div>
@@ -25,12 +28,11 @@ $if d.upcoming_elections:
 	$for c in d.upcoming_elections.candidates:
 		<tr>
 		<td>
-		<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
-		<a href="/$c.party.id">$c.party.shortname</a>
+		<a href="/party/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
+		<a href="/party/$c.party.id">$c.party.shortname</a>
 		</td>
-		<td><a href="/$c.id">$c.name</a></td>
+		<td><a href="/candidate/$c.id">$c.name</a></td>
 		</tr>
-
 	</table>
 	</div>
 
@@ -48,12 +50,16 @@ $if d.election_history:
 		$for c in election.candidates:
 			<tr>
 			<td>
-			<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
-			<a href="/$c.party.id">$c.party.name</a>
+			<a href="/party/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
+			<a href="/party/$c.party.id">$c.party.name</a>
 			</td>
-			<td><a href="/$c.id">$c.id</a></td>
+			<td><a href="/candidate/$c.id">$c.id</a></td>
 			<td>$c.percentage_votes</td>
 			</tr>
 		</table>
 		<hr/>
 	</div>
+
+<div>
+    Developers: Get page in <a href="${d.id}.json">JSON</a>.
+</div>

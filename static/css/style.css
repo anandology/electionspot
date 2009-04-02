@@ -1,0 +1,39 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+#header {
+    margin: 0px;
+    padding: 10px;
+    background: #003463;
+    color: #97A9BD;
+}
+
+#header em {
+    text-decoration: normal;
+    font-style: normal;
+    color: #A7B9CD;
+}
+
+#header h1 a {
+    text-decoration:none;
+    color: inherit;
+}
+
+#content {
+    padding: 10px 20px;
+}
+
+#footer {
+    clear: both;
+    margin-top: 10px;
+    border-top: 1px solid gray;
+    text-align: center;
+}
+
+#map {
+    float: right;
+    width: 300px;
+    height: 500px;
+    border: none;
+}

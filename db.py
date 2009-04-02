@@ -39,7 +39,7 @@ def get_party(name):
         return None
 
 def get_candidate(name):
-    return storage()
+    return web.storage(id=name, name=name)
 
 def get_state(id):
     id = id.upper()
