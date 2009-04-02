@@ -62,6 +62,12 @@ def pop_many(row, *keys):
     return row
 
 def get_constituency(state, id):
+    def parse_candidate(d):
+        candidate = d.pop('candidate')
+        d.pop('constituency')
+        candidate.update(d)
+        return candidate
+        
     def parse(d):
         constituency = d[0].constituency
         constituency.election_history = []
@@ -72,7 +78,7 @@ def get_constituency(state, id):
                 year=year,
                 numvoters=data[0].numvoters,
                 turnout=data[0].turnout,
-                candidates=[pop_many(r, "constituency") for r in data]
+                candidates=[parse_candidate(r) for r in data]
             )
             constituency.election_history.append(h)
         return constituency
