@@ -17,7 +17,7 @@ class Render(web.template.Render):
         if web.ctx.is_json:
             return self.to_json
         else:
-            def t(d=None):
+            def t(d):
                 if d is None:
                     raise web.notfound()
                 return web.template.Render.__getattr__(self, name)(d)
