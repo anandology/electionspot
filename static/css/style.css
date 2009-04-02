@@ -5,8 +5,7 @@ body {
 #header {
     margin: 0px;
     padding: 10px;
-    background: #003463;
-    color: #97A9BD;
+    border-bottom: gray solid 1px ;
 }
 
 #header em {
@@ -37,3 +36,17 @@ body {
     height: 500px;
     border: none;
 }
+
+tr.odd {background-color: #eee; }
+tr.even { }
+tr.header { color: #9C3236;}
+td a {color: green;}
+td.year{font-weight:bold;}
+td.rule {border-top: 1px solid #ccc; }
+img.party-symbol {border: 0px; width:20px;}
+.line {line-height:16px; padding:7px 5px 2px 0pt; text-align:left center;}
+#heading{font-size:26px;}
+#heading a{color: #376837;}
+#heading p.subtitle{margin-top:0px;padding-top:0px; font-family: verdana; font-style: italic; font-size:12px;}
+p.section-label{line-height:24px;text-align:left;font-size:20px;}
+p.table-label{line-height:20px;font-size:20px;color:blue;}

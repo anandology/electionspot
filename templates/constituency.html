@@ -6,12 +6,12 @@ $var title: $d.name
 </iframe>
 
 <div id="heading">
-<h2>$d.name Parliamentary Constituency</h2>
+$d.name, <a href="/$d.state.id">$d.state.name</a>
+<p class='subtitle'> Parliamentary Constituency</p>
 </div>
 
 <div class="section" id="profile">
 	<ul>
-		<li>State: <a href="/$d.state.id">$d.state.name</a></li>
 		$if d.stats:
 			<li>No.of Voters: $d.stats.numvoters</li>
 			<li>Male-Female ratio: $d.stats.ratio_of_male_female_voters</li>
@@ -19,12 +19,14 @@ $var title: $d.name
 		</ul>
 </div>
 
+$def prettify(id):
+    $id.lower().replace('_', ' ').title()
+
 $if d.upcoming_elections:
-	<div class="section" id="upcoming_elections">
 	<h4>Upcoming Elections, $d.upcoming_elections.date</h4>
 	<p>List of candidates</p>
 	<table>
-	<th>Party</th><th>Candidate</th>
+	<tr><th>Party</th><th>Candidate</th></tr>
 	$for c in d.upcoming_elections.candidates:
 		<tr>
 		<td>
@@ -34,31 +36,26 @@ $if d.upcoming_elections:
 		<td><a href="/candidate/$c.id">$c.name</a></td>
 		</tr>
 	</table>
-	</div>
-
+	
 $if d.election_history:
-	<div id="election_history" class="section">
-	<h4>Election History</h4>
+	<p class='section-label'>Election History</p>
+	<table>
+	    <tr class="header"><th width='40px'>&nbsp;</th><th>Party</th><th>Candidate</th><th>Votes %</th></tr>
 	$for election in d.election_history:
-		<h5>Year: $election.year </h5>
-		<table>
-		<tr>
-		<th>Party</th>
-		<th>Candidate</th>
-		<th>% votes</th>
-		</tr>
+		     <tr><td colspan='4' class='year'>$election.year</td></tr>
 		$for c in election.candidates:
-			<tr>
-			<td>
-			<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
+			<tr class="$loop.parity">
+			<td width='40px' style='background-color:white;'>&nbsp;</td>
+			<td class='line'>
+			$#<a href="/$c.party.id"><img class='party-symbol' src="/static/images/${c.party.id}.jpg"/></a>
+			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/></a> <!--for now -->
 			<a href="/$c.party.id">$c.party.name</a>
 			</td>
-			<td><a href="/candidate/$c.id">$c.id</a></td>
+			<td><a href="/$c.id">$prettify(c.id)</a></td>
 			<td>$c.percentage_votes</td>
 			</tr>
-		</table>
-		<hr/>
-	</div>
+		<tr><td colspan="4" class="rule" >&nbsp;</td></tr>
+    </table>
 
 <div>
     Developers: Get page in <a href="${d.id}.json">JSON</a>.
