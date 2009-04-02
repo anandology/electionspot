@@ -9,6 +9,16 @@ def getdb():
     if db is None:
         db = web.database(**web.config.db_parameters)
     return db
+
+class storage(web.storage):
+	def __getattr__(self, key):
+		try:
+			return web.storage.__getattr__(self, key)
+		except KeyError:
+			if key.startswith("_"):
+				raise
+			else:
+				return None
     
 def query(*a, **kw):
     return getdb().query(*a, **kw)
@@ -17,7 +27,7 @@ def storify(d):
     if isinstance(d, list):
         return [storify(x) for x in d]
     elif isinstance(d, dict):
-        return web.storage((k, storify(v)) for k, v in d.items())
+        return storage((k, storify(v)) for k, v in d.items())
     else:
         return d
 
@@ -29,7 +39,7 @@ def get_party(name):
         return None
 
 def get_candidate(name):
-    return web.storage()
+    return storage()
 
 def get_state(id):
     id = id.upper()
@@ -44,18 +54,20 @@ def get_constituency(state, id):
     except IndexError:
         return None
         
-    d = web.storage()
+    d = storage()
     d.id = id
     d.name = constituency.name
     d.state = get_state(constituency.state)
     d.election_history = list(get_election_history(id))
+    d.stats = None
+    d.upcoming_elections = None
     return d
     
 def get_election_history(constituency_id):
     def parse_candidate(d):
-        out = web.storage()
+        out = storage()
         out.id = d.candidate_id
-        out.party = web.storage(id="party/" + d.party_id, name=d.party_id)
+        out.party = storage(id="party/" + d.party_id, name=d.party_id)
         out.percentage_votes = d.percentage_votes_polled
         return out
     
@@ -63,7 +75,7 @@ def get_election_history(constituency_id):
 
     for year, data in itertools.groupby(result, lambda row: row.year):
         data = list(data)
-        x = web.storage()
+        x = storage()
         x.year = year
         x.numvoters = data[0].total_votes
         x.candidates = [parse_candidate(d) for d in data]

@@ -9,46 +9,51 @@ $var title: $d.name
 <div class="section" id="profile">
 	<ul>
 		<li>State: <a href="/$d.state.id">$d.state.name</a></li>
-		<li>No.of Voters: $d.stats.numvoters</li>
-		<li>Male-Female ratio: $d.stats.ratio_of_male_female_voters</li>
-		<li>Literacy(%): $d.stats.percentage_literacy</li>
+		$if d.stats:
+			<li>No.of Voters: $d.stats.numvoters</li>
+			<li>Male-Female ratio: $d.stats.ratio_of_male_female_voters</li>
+			<li>Literacy(%): $d.stats.percentage_literacy</li>
 		</ul>
 </div>
 
-<div class="section" id="upcoming_elections">
-<h4>Upcoming Elections, $d.upcoming_elections.date</h4>
-
-<p>List of candidates</p>
-<table>
-<th>Party</th><th>Candidate</th>
-$for c in d.upcoming_elections.candidates:
-	<tr>
+$if d.upcoming_elections:
+	<div class="section" id="upcoming_elections">
+	<h4>Upcoming Elections, $d.upcoming_elections.date</h4>
+	<p>List of candidates</p>
+	<table>
+	<th>Party</th><th>Candidate</th>
+	$for c in d.upcoming_elections.candidates:
+		<tr>
 		<td>
-			<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
-			<a href="/$c.party.id">$c.party.shortname</a>
+		<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
+		<a href="/$c.party.id">$c.party.shortname</a>
 		</td>
 		<td><a href="/$c.id">$c.name</a></td>
-	</tr>
-</table>
-</div>
+		</tr>
 
-<div id="election_history" class="section">
-<h4>Election History</h4>
-$for election in d.election_history:
-	<table>
-		<tr>
-			<th>Party</th>
-			<th>Candidate</th>
-			<th>% votes</th>
-		</tr>
-	$for c in election.candidates:
-		<tr>
-			<td>
-				<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
-				<a href="/$c.party.id">$c.party.shortname</a>
-			</td>
-			<td><a href="/$c.id">$c.name</a></td>
-			<td>$c.percentage_votes</td>
-		</tr>
 	</table>
-</div>
+	</div>
+
+$if d.election_history:
+	<div id="election_history" class="section">
+	<h4>Election History</h4>
+	$for election in d.election_history:
+		<h5>Year: $election.year </h5>
+		<table>
+		<tr>
+		<th>Party</th>
+		<th>Candidate</th>
+		<th>% votes</th>
+		</tr>
+		$for c in election.candidates:
+			<tr>
+			<td>
+			<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
+			<a href="/$c.party.id">$c.party.name</a>
+			</td>
+			<td><a href="/$c.id">$c.id</a></td>
+			<td>$c.percentage_votes</td>
+			</tr>
+		</table>
+		<hr/>
+	</div>
