@@ -11,5 +11,27 @@ $var title: $d.name
 
 <div id="photo"></div>
 
-<div id="facts">
-</div>
+$if d.election_history:
+	<div id="election_history" class="section">
+	<h4>Election History</h4>
+	<table>
+	    <tr class="header">
+	        <th>year</th>
+	        <th>party</th>
+	        <th>constituency</th>
+	        <th>% votes polled</th>
+	        <th>won</th>
+	    </tr>
+	$for e in d.election_history:
+	    <tr class="$loop.parity">
+	        <td>$e.year</td>
+	        <td>
+    			<a href="/$e.party.id"><img src="/static/images/${e.party.id}.jpg"/></a>
+    			<a href="/$e.party.id">$e.party.name</a>	           
+	        </td>
+	        <td><a href="/$e.constituency.id">$e.constituency.name</a></td>
+	        <td>$e.percentage_votes_polled</td>
+	        <td>N/A</td>
+	    </tr>
+	</table>
+<div>
