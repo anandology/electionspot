@@ -32,6 +32,7 @@ create table election (
     candidate_id text references candidate,
     party_id text references party,
     percentage_votes_polled real,
+    won boolean default 'f',
     
     UNIQUE (year, constituency_id, candidate_id)
 );

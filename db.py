@@ -50,17 +50,13 @@ def get_candidate(id):
     return d and parse(d)
 
 def get_state(id):
-    id = id.upper()
-    try:
-        return query("SELECT * FROM state WHERE id=$id", vars=locals())[0]
-    except IndexError:
-        return None
+    def parse(d):
+        x = d[0].constituency.state
+        x.election_history = d
+        return x
+    d = get_election_history(state_id=id.upper())
+    return d and parse(d)
         
-def pop_many(row, *keys):
-    for k in keys:
-        row.pop(k)
-    return row
-
 def get_constituency(state, id):
     def parse_candidate(d):
         candidate = d.pop('candidate')
@@ -85,46 +81,32 @@ def get_constituency(state, id):
         
     d = get_election_history(constituency_id=id)
     return d and parse(d)
-    
-def xget_election_history(constituency_id):
-    def parse_candidate(d):
-        out = storage()
-        out.id = d.candidate_id
-        out.party = storage(id="party/" + d.party_id, name=d.party_id)
-        out.percentage_votes = d.percentage_votes_polled
-        return out
-    
-    result = query("SELECT * FROM election "
-        + " JOIN constituency ON election.constituency_id=constituency.id"
-        + " JOIN party ON election.party_id=party.id"
-        + " WHERE constituency_id=$constituency_id ORDER BY year desc, percentage_votes_polled desc",     
-        vars=locals())
-        
-    for year, data in itertools.groupby(result, lambda row: row.year):
-        data = list(data)
-        print data
-        x = storage()
-        x.year = year
-        x.numvoters = data[0].total_votes
-        x.candidates = [parse_candidate(d) for d in data]
-        yield x
 
 def get_election_history(constituency_id=None, party_id=None, candidate_id=None, state_id=None):
-    args = dict((k, v) for k, v in locals().items() if v)
-    wheres = [web.reparam("%s = $v" % k, {'v': v}) for k, v in args.items()]
+    wheres = []
+    if constituency_id: 
+        wheres.append('constituency_id = $constituency_id')
+    if party_id:
+        wheres.append('party_id = $party_id')
+    if candidate_id:
+        wheres.append('candidate_id = $candidate_id')
+    if state_id:
+        wheres.append('c.state = $state_id')
+    wheres = " AND ".join(wheres)
     
-    result = query("SELECT election.* " 
+    result = query("SELECT election.*" 
         + " , c.id as c_id, c.name as c_name, c.state as state_id"
         + " , s.id as s_id, s.name as s_name"
-        + " , p.name AS p_name, p.id as p_id, p.shortname as p_shortname "
+        + " , p.name AS p_name, p.id as p_id, p.shortname as p_shortname"
         + " , m.id as m_id, m.name as m_name"
         + " FROM election "
         + " JOIN constituency AS c ON election.constituency_id=c.id"
         + " JOIN state AS s ON c.state=s.id"
         + " JOIN party AS p ON election.party_id=p.id"
         + " JOIN candidate AS m ON election.candidate_id=m.id"
-        + " WHERE " + web.SQLQuery.join(wheres, "AND")
-        + " ORDER BY year desc, percentage_votes_polled desc")
+        + " WHERE " + wheres
+        + " ORDER BY year desc, percentage_votes_polled desc",
+        vars=locals())
         
     def parse_row(row):
         return storage(
@@ -148,7 +130,8 @@ def get_election_history(constituency_id=None, party_id=None, candidate_id=None,
                 id="party/" + row.p_id,
                 shortname=row.p_shortname,
                 name=row.p_name
-            )
+            ),
+            won=row.won,
         )
     
     d = [parse_row(row) for row in result]

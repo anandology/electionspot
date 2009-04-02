@@ -31,7 +31,7 @@ $if d.election_history:
 	        </td>
 	        <td><a href="/$e.constituency.id">$e.constituency.name</a></td>
 	        <td>$e.percentage_votes_polled</td>
-	        <td>N/A</td>
+	        <td>$(["No", "Yes"][e.won])</td>
 	    </tr>
 	</table>
 <div>

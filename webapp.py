@@ -5,6 +5,7 @@ import db
 
 urls = (
     "/", "home",
+    "(/.*)/", "redirect",
     "/party/(.*)", "party",
     "/candidate/(.*)", "candidate",
     "/([A-Za-z-]*)", "state",
@@ -17,6 +18,10 @@ app.add_processor(web.loadhook(utils.json_processor))
 
 tglobals = dict(maproot="http://122.170.127.7/KMAP")
 render = utils.Render("templates", base="layout", globals=tglobals)
+
+class redirect:
+    def GET(self, path):
+        raise web.seeother(path)
 
 class home:
     def GET(self):

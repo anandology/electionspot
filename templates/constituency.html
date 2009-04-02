@@ -51,8 +51,8 @@ $if d.election_history:
 			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/></a> <!--for now -->
 			<a href="/$c.party.id">$c.party.name</a>
 			</td>
-			<td><a href="/$c.id">$prettify(c.id)</a></td>
-			<td>$c.percentage_votes</td>
+			<td><a href="/$c.id">$prettify(c.name)</a></td>
+			<td>$c.percentage_votes_polled</td>
 			</tr>
 		<tr><td colspan="4" class="rule" >&nbsp;</td></tr>
     </table>
