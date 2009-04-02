@@ -31,7 +31,7 @@ def storify(d):
     else:
         return d
 
-def get_party(name):
+def get_party(id):
     id = id.upper()
     try:
         return query("SELECT * FROM party WHERE id=$id", vars=locals())[0]

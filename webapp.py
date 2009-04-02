@@ -20,7 +20,7 @@ render = utils.Render("templates", base="layout", globals=tglobals)
 
 class home:
     def GET(self):
-        return render.home({})
+        return render.home()
 
 class party:
     def GET(self, name):
