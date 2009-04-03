@@ -7,3 +7,33 @@ $var title: $d.name
 <div id="heading">
 <h2>$d.name</h2>
 </div>
+
+<table>
+    $for year in sorted(d.performance, reverse=True):
+        <tr>
+            <td>$year</td>
+            <td>
+                <table>
+                    <tr>
+                        <th>Party</th>
+                        <th>Contested</th>
+                        <th>Won</th>
+                    </tr>
+                $ year_data = sorted(d.performance[year], key=lambda row: row.won, reverse=True)
+                $for data in year_data:
+                    <tr>
+                        <td><a href="$data.party.id">$data.party.name</a></td>
+                        <td>$data.contested</td>
+                        <td>$data.won</td>
+                    </tr>
+                </table>                
+            </td>
+            <td>
+                $code:
+                    chart = PieChart(250, 100)
+                    chart.add_data([data.won for data in year_data])
+                    chart.set_pie_labels([data.party.shortname for data in year_data])
+                <img src="$chart.get_url()"/>
+            </td>
+        </tr>
+</table>

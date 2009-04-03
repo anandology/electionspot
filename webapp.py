@@ -17,12 +17,12 @@ urls = (
 app = web.application(urls, globals())
 app.add_processor(web.loadhook(utils.json_processor))
 
-
 tglobals = {
     "maproot": "http://x122.170.127.7/KMAP",
     "sorted": sorted,
     "str": str,
     "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
+    "PieChart": pygooglechart.PieChart2D,
 }
 render = utils.Render("templates", base="layout", globals=tglobals)
 

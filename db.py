@@ -56,6 +56,16 @@ def get_party(id):
 
     d = get_election_history(party_id=id)
     return d and parse(d)
+    
+def groupby(data, keys, params):
+    keyfunc = lambda d: [d[k] for k in keys]
+    data = sorted(data, key=keyfunc)
+    for xkeys, values in itertools.groupby(data, keyfunc):
+        d = storage(zip(keys, xkeys))
+        values = list(values)
+        for p in params:
+            d[p] = params[p](values)
+        yield d
 
 def get_candidate(id):
     def parse(d):
@@ -67,10 +77,19 @@ def get_candidate(id):
     return d and parse(d)
 
 def get_state(id):
+    def group(data):
+        data = groupby(data, ["year", "party"], dict(contested=lambda values: len(values), won=lambda values: len([x for x in values if x.won])))
+        result = {}
+        for k, v in itertools.groupby(data, lambda d: d.year):
+            result[k] = list(v)
+        return result
+            
     def parse(d):
         x = d[0].constituency.state
-        x.election_history = d
+        #x.election_history = d
+        x.performance = group(d)
         return x
+
     d = get_election_history(state_id=id.upper())
     return d and parse(d)
         
