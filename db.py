@@ -30,11 +30,28 @@ def storify(d):
         return storage((k, storify(v)) for k, v in d.items())
     else:
         return d
+        
+def list_parties():
+    result = getdb().query("SELECT * FROM party").list()
+    for row in result:
+        row.id = "party/" + row.id
+    return result
+    
+def list_constituencies():
+    pass
 
 def get_party(id):
     def parse(d):
         x = d[0].party
         x.election_history = [r.pop('party') and r for r in d]
+
+        years = {}
+        for e in x.election_history:
+            y = years.setdefault(e.year, storage(year=e.year, contested=0, won=0))
+            y.contested += 1
+            if e.won:
+                y.won += 1
+        x.performance = sorted(years.values(), key=lambda p: p.year, reverse=True)
         return x
 
     d = get_election_history(party_id=id)

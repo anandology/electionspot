@@ -2,10 +2,12 @@ import web
 
 import utils
 import db
+import pygooglechart
 
 urls = (
     "/", "home",
     "(/.*)/", "redirect",
+    "/party", "parties",
     "/party/(.*)", "party",
     "/candidate/(.*)", "candidate",
     "/([A-Za-z-]*)", "state",
@@ -16,7 +18,12 @@ app = web.application(urls, globals())
 app.add_processor(web.loadhook(utils.json_processor))
 
 
-tglobals = dict(maproot="http://122.170.127.7/KMAP")
+tglobals = {
+    "maproot": "http://x122.170.127.7/KMAP",
+    "sorted": sorted,
+    "str": str,
+    "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
+}
 render = utils.Render("templates", base="layout", globals=tglobals)
 
 class redirect:
@@ -26,6 +33,10 @@ class redirect:
 class home:
     def GET(self):
         return render.home({})
+
+class parties:
+    def GET(self):
+        return render.list("Parties", db.list_parties())
 
 class party:
     def GET(self, name):
