@@ -11,7 +11,7 @@ urls = (
     "/party/(.*)", "party",
     "/candidate/(.*)", "candidate",
     "/([A-Za-z-]*)", "state",
-    "/([A-Za-z-]*)/([A-Za-z-]*)", "constituency",
+    "/([A-Za-z-]*)/([A-Za-z-_]*)", "constituency",
 )
 
 app = web.application(urls, globals())
