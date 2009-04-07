@@ -1,13 +1,14 @@
-
 import web
 import itertools
+
+import config
 
 db = None
 
 def getdb():
     global db
     if db is None:
-        db = web.database(**web.config.db_parameters)
+        db = web.database(**config.db_parameters)
     return db
 
 class storage(web.storage):

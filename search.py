@@ -1,15 +1,17 @@
 import xappy
+import config
 
 def search(s):
-    conn = xappy.SearchConnection("db")
+    conn = xappy.SearchConnection(config.search_db)
     q = conn.query_parse(conn.spell_correct(s))
-    return [x.data for x in conn.search(q, 0, 10)]
+    return [x.data for x in conn.search(q, 0, 20)]
 
 def index():
     """Index entire database."""
-    indexer = xappy.IndexerConnection("db")
+    indexer = xappy.IndexerConnection(config.search_db)
     indexer.add_field_action("name", xappy.FieldActions.INDEX_FREETEXT, spell=True)
     indexer.add_field_action("id", xappy.FieldActions.INDEX_EXACT)
+    indexer.add_field_action("type", xappy.FieldActions.INDEX_EXACT)
 
     def add_to_index(data):
         doc = xappy.UnprocessedDocument()
@@ -38,9 +40,6 @@ def index():
     indexer.close()
 
 if __name__ == "__main__":
-    import web
-    user = "anand"
-    web.config.db_parameters = dict(dbn="postgres", db="electionspot", user=user, pw="")
     import sys
     if len(sys.argv) > 1:
         print list(search(sys.argv[1]))

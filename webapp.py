@@ -70,8 +70,5 @@ class do_search:
             return render.search(results)
 
 if __name__ == "__main__":
-    import os
-    user = os.getenv('USER')
-    web.config.db_parameters = dict(dbn="postgres", db="electionspot", user=user, pw="")
     app.run()
 
