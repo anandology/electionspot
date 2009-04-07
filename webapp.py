@@ -24,6 +24,7 @@ tglobals = {
     "maproot": "http://122.170.127.7/KMAP",
     "sorted": sorted,
     "str": str,
+    "changequery": web.changequery,
     "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
     "PieChart": pygooglechart.PieChart2D,
 }
@@ -63,13 +64,13 @@ class constituency:
 
 class do_search:
     def GET(self):
-        i = web.input(q="")
-        results = search.search(i.q)
-        if len(results) == 1:
+        i = web.input(q="", page=1)
+        page = int(i.page)
+        nmatched, results = search.search(i.q, page=page-1)
+        if len(results) == 1 and page == 1:
             raise web.seeother(results[0].id)
         else:
-            return render.search(results)
+            return render.search(results, nmatched, page)
 
 if __name__ == "__main__":
     app.run()
-

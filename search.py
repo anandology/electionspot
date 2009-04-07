@@ -1,10 +1,11 @@
 import xappy
 import config
 
-def search(s):
+def search(s, page=0):
     conn = xappy.SearchConnection(config.search_db)
     q = conn.query_parse(conn.spell_correct(s))
-    return [x.data for x in conn.search(q, 0, 20)]
+    result = conn.search(q, page*20, page*20+20)
+    return result.matches_estimated, [x.data for x in result]
 
 def index():
     """Index entire database."""
@@ -42,6 +43,6 @@ def index():
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1:
-        print list(search(sys.argv[1]))
+        print sorted(d.name for d in search(sys.argv[1]))
     else:
         index()
