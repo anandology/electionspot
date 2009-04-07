@@ -10,6 +10,6 @@ $for d in results:
 <div class="pagination">
 $if page != 1:
     <a href="$changequery(page=page-1)">Prev</a>
-$if page*20+20 < nmatched:
+$if page*20 < nmatched:
     <a href="$changequery(page=page+1)">Next</a>
 </div>

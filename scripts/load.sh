@@ -12,3 +12,5 @@ done
 
 rm -rf db
 python search.py
+
+#pg_dump $db | gzip -c > electionspot_pgdump.gz

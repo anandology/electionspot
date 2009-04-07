@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 import web
 import pygooglechart
+import urllib
 
 import utils
 import db
@@ -50,7 +51,10 @@ class party:
 class candidate:
     def GET(self, name):
         d = db.get_candidate(name)
+        if d is None:
+            raise web.seeother('/search?' + urllib.urlencode(dict(q=name.replace('_', ' '))))
         return render.candidate(d)
+        
 
 class state:
     def GET(self, name):

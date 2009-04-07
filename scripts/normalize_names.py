@@ -21,24 +21,20 @@ def matcher(sign_func):
         return d.setdefault(sign, name)
     return f
 
-re_sign1 = re.compile(r'\.|,| ')
-def sign1(name):
-    "match order"
-    tokens = [t.lower() for t in re_sign1.split(name)]
-    return "".join(sorted(tokens))
+re_ = re.compile(r'\.|,| ')
 
-def sign2(name):
+def sign1(name):
     """sort all chars"""
-    chars = re_sign1.sub('', name).lower()
+    chars = [c for c in name.lower() if c not in "., "]
     return "".join(sorted(chars))
 
 actions = [
     action(r'\(.*\)', ''), # remove parentheses
     action(r'\.([^ ])', r'. \1'), # space after dot
     action(r'([A-Z]) +', r'\1. '), # dot space after initial
+    action(r'([A-Z])$', r'\1.'), # dot after ending initial 
     action(r' +', r' '), # strip multiple spaces
-    matcher(sign1), # handle reorders
-    matcher(sign2), # handle space-sensitivity (e.g. Lal Krishna, Lalkrishna)
+    matcher(sign1), # handle reorders and space-sensitivity (e.g. Lal Krishna, Lalkrishna)
 ]
 
 def normalize(name):
