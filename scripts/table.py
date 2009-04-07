@@ -15,7 +15,7 @@ def write_tsv(filename, data):
     f.close()
     
 def normalize(name):
-    return name.replace('&', 'and').replace('   ', ' ').replace('  ', ' ').replace(' ', '_').lower()
+    return name.replace('&', 'and').replace('   ', ' ').replace('  ', ' ').replace(' ', '_')
 
 def process(election_file, states_file):
     states = dict((name, id) for id, name, _ in read_tsv(states_file))
@@ -34,7 +34,7 @@ def process(election_file, states_file):
         state = restates.get(state, state)
         state_id = states[state]
         
-        constituency_id = normalize(constituency)
+        constituency_id = normalize(constituency).lower()
         constituencies[constituency_id] = [constituency_id, constituency, state_id]
         
         candidate_id = normalize(candidate)
@@ -53,4 +53,4 @@ def main(election_file, states_file):
     write_tsv("data/election.txt", data)
 
 if __name__ == '__main__':
-    main("election.txt", "data/state.txt")
+    main("data/rawdata.txt", "data/state.txt")
