@@ -8,7 +8,14 @@ $def with (page)
 </head>
 <body>
 	<div id="header">
+        <div class="search">
+            <form action="/search" method="GET">
+                <input name="q"/>
+                <input type="submit" name="search" value="Search"/>
+            </form>
+        </div>
         <h1><a href="/">Electionspot</a></h1>
+        <br clear="both"/>
 	</div>
 	<div id="content">
     $:page

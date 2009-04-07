@@ -1,11 +1,13 @@
 import web
+import pygooglechart
 
 import utils
 import db
-import pygooglechart
+import search
 
 urls = (
     "/", "home",
+    "/search", "do_search",
     "(/.*)/", "redirect",
     "/party", "parties",
     "/party/(.*)", "party",
@@ -57,6 +59,15 @@ class constituency:
     def GET(self, state, name):
         d = db.get_constituency(state, name)
         return render.constituency(d)
+
+class do_search:
+    def GET(self):
+        i = web.input(q="")
+        results = search.search(i.q)
+        if len(results) == 1:
+            raise web.seeother(results[0].id)
+        else:
+            return render.search(results)
 
 if __name__ == "__main__":
     import os
