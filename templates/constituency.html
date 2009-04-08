@@ -2,11 +2,11 @@ $def with (d)
 
 $var title: $d.name
 
-<iframe id="map" src="$maproot/kmap.html">
+<iframe id="map" src="$maproot/kmap.html?s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
 </iframe>
 
 <div id="heading">
-$d.name, <a href="/$d.state.id">$d.state.name</a>
+$d.name, <a href="/$d.state.id.lower()">$d.state.name</a>
 <p class='subtitle'> Parliamentary Constituency</p>
 </div>
 
