@@ -29,7 +29,9 @@ tglobals = {
     "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
     "PieChart": pygooglechart.PieChart2D,
 }
-render = utils.Render("templates", base="layout", globals=tglobals)
+# render = utils.Render("templates", base="layout", globals=tglobals)
+render = utils.Render("templates", base="es_layout", globals=tglobals)
+app.notfound = lambda: web.notfound(render.notfound(""))
 
 class redirect:
     def GET(self, path):
@@ -59,6 +61,7 @@ class candidate:
 class state:
     def GET(self, name):
         d = db.get_state(name)
+        print >> web.debug, d
         return render.state(d)
 
 class constituency:

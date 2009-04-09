@@ -1,5 +1,7 @@
 $def with (results, nmatched, page)
 
+<!-- Facts -->
+<div id="facts">
 Matched $nmatched records.<br/><br/>
 
 $for d in results:
@@ -12,4 +14,6 @@ $if page != 1:
     <a href="$changequery(page=page-1)">Prev</a>
 $if page*20 < nmatched:
     <a href="$changequery(page=page+1)">Next</a>
+</div>
+
 </div>

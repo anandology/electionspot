@@ -2,13 +2,16 @@ $def with (d)
 
 $var title: $d.name
 
-<iframe id="map" src="$maproot/kmap.html?w=350&h=500&s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
-</iframe>
-
-<div id="heading">
-$d.name, <a href="/$d.state.id.lower()">$d.state.name</a>
-<p class='subtitle'> Parliamentary Constituency</p>
+<!-- Breadcrumbs -->
+<div id="breadcrumbs">
+	<a href="/">Home</a> » <a href="/states">States</a> » <a href="/$d.state.id">$d.state.name</a> » $d.name'
 </div>
+<!-- Breadcrumbs end -->
+
+<!-- Facts -->
+<div id="facts">
+<h2>$d.name</h2>
+<p class='subtitle'> Parliamentary Constituency</p>
 
 <div class="section" id="profile">
 	<ul>
@@ -38,18 +41,18 @@ $if d.upcoming_elections:
 	</table>
 	
 $if d.election_history:
-	<p class='section-label'>Election History</p>
-	<table>
-	    <tr class="header"><th width='40px'>&nbsp;</th><th>Party</th><th>Candidate</th><th>Votes %</th></tr>
+	<h3 class='section-label'>Election History</h3>
+	<table class="infoTable" cellspacing=0>
+	    <tr class="header"><th>Year</th><th>Party</th><th>Candidate</th><th>Votes(%)</th></tr>
 	$for election in d.election_history:
-		     <tr><td colspan='4' class='year'>$election.year</td></tr>
 		$for c in election.candidates:
-			<tr class="$loop.parity">
-			<td width='40px' style='background-color:white;'>&nbsp;</td>
-			<td class='line'>
+			<tr class="$loop.parent.parity">
+			$if loop.first:
+				<td class='result' rowspan="2">$election.year</td>
+			<td class='result'>
 			$#<a href="/$c.party.id"><img class='party-symbol' src="/static/images/${c.party.id}.jpg"/></a>
-			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/></a> <!--for now -->
-			<a href="/$c.party.id">$c.party.name</a>
+			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/><!--for now -->
+			$c.party.name</a>
 			</td>
 			<td><a href="/$c.id">$prettify(c.name)</a></td>
 			<td>$c.percentage_votes_polled</td>
@@ -60,3 +63,16 @@ $if d.election_history:
 <div>
     Developers: Get page in <a href="${d.id}.json">JSON</a>.
 </div>
+
+
+</div>
+<!-- Facts end -->
+
+
+<!-- Map -->
+<div id="map">
+	<iframe id="map" src="$maproot/kmap.html?w=350&h=500&s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
+	</iframe>
+
+</div>
+<!-- Map ends -->

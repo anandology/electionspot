@@ -1,25 +1,9 @@
 $def with (d)
 
+<!--
 <iframe id="map" src="$maproot/kmap.html">
 </iframe>
-
-<div id="heading">
-<h2>$d.name Party</h2>
-</div>
-
-<table>
-    <tr>
-        <th>Year</th>
-        <th>Contested</th>
-        <th>Won</th>
-    </tr>
-    $for p in d.performance:
-        <tr>
-            <td>$p.year</td>
-            <td>$p.contested</td>
-            <td>$p.won</td>
-        </tr>
-</table>
+-->
 
 $code:
     ymax = max(p.contested for p in d.performance)
@@ -38,7 +22,7 @@ $code:
         
     ymax = ystep * (1 + ymax/ystep)
     
-    chart = GroupedVerticalBarChart(600, 200, y_range=(0, ymax))
+    chart = GroupedVerticalBarChart(400, 200, y_range=(0, ymax))
     chart.set_bar_width(10)
     chart.add_data([p.contested for p in d.performance][::-1])
     chart.add_data([p.won for p in d.performance][::-1])
@@ -47,4 +31,36 @@ $code:
     chart.set_axis_labels("x", [p.year for p in d.performance][::-1])
     chart.set_axis_labels("y", range(0, ymax+1, ystep))
 
-<img src="$chart.get_url()"/>
+<!-- Facts -->
+<div id="facts">
+<h2>$d.name</h2>
+
+<table class="infoTable">
+    <tr class="header">
+        <th>Year</th>
+        <th>Contested</th>
+        <th>Won</th>
+        <th></th>
+    </tr>
+    $for p in d.performance:
+        <tr class="$loop.parity">
+            <td class="result">$p.year</td>
+            <td class="result">$p.contested</td>
+            <td class="result">$p.won</td>
+            <td rowspan="$len(d.performance)">
+            $if loop.first:
+                <img src="$chart.get_url()"/>
+            </td>
+        </tr>
+</table>
+
+</div>
+<!-- Facts end -->
+
+
+<!-- Map -->
+<div id="map">
+	<iframe id="map" src="$maproot/kmap.html?w=350&h=500"></iframe>
+<div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
+</div>
+<!-- Map ends -->

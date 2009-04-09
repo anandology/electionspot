@@ -1,27 +1,47 @@
 $def with (page)
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />    
-    <link rel="stylesheet" href="/static/css/style.css" />
-
-    <title>$page.get("title", "Welcome") - Electionspot</title>
-</head>
-<body>
-	<div id="header">
-        <div class="search">
-            <form action="/search" method="GET">
-                <input name="q"/>
-                <input type="submit" value="Search"/>
-            </form>
-        </div>
-        <h1><a href="/">Electionspot</a></h1>
-        <br clear="both"/>
-	</div>
-	<div id="content">
-    $:page
-	</div>
-	<div id="footer">
-        <a href="/about">about</a>
-	</div>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	<head>
+		<link rel="stylesheet" href="/static/css/es_style.css"/>
+    	<title>$page.get("title", "Welcome") - Electionspot</title>
+	</head>
+	<body>
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<!-- Header -->
+			<div id="header">
+				<div id="branding">
+					<a href="/"><img src="/static/images/logo.png" alt="Election Spot"></a>
+					<div id="byline">Information on Election Constituencies in India</div>
+				</div>
+				
+				<div id="searchBox">
+					<form action="/search">
+						<input type="text" name="q" class="searchInput" />
+					</form>
+				</div>
+			</div>
+			<!-- Header ends -->
+			<!-- Menu -->
+			<div id="menu">
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="/about">About</a></li>
+					<!--<li><a href="states.html">States &amp; Union Territories</a></li>
+					<li><a href="list.html">Alphabetical List of Lok Sabha Constituencies</a></li>-->
+				</ul>
+			</div>
+			<!-- Menu ends -->
+			<!-- Content -->
+			<div id="content">
+				$:page
+			</div>
+			<!-- Content ends -->
+			<!-- Footer -->
+			<br style="clear:both;"/>
+			<!-- Footer ends -->
+		</div>
+		<!-- Wrapper ends -->
+	</body>
 </html>

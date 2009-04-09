@@ -36,7 +36,7 @@
             "status": "winner",
             "percentage_votes": 50
         }, {
-            "id": "killi_kruparani",
+            "id": "candidate/killi_kruparani",
             "name": "Killi Kruparani",
             "party": {
                 "id": "party/INC",
@@ -60,7 +60,7 @@
             "status": "winner",
             "percentage_votes": 56.81
         }, {
-            "id": "kanithi_viswanadaham",
+            "id": "candidate/kanithi_viswanadaham",
             "name": "Kanithi Viswanadaham",
             "party": {
                 "id": "party/INC",

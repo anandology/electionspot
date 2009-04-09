@@ -2,38 +2,47 @@ $def with (d)
 
 $var title: $d.name
 
-<iframe id="map" src="$maproot/kmap.html?w=350&h=500&s=d.id.lower()"></iframe>
+$def piechart(year_data):
+    $code:
+        chart = PieChart(250, 100)
+        chart.add_data([data.won for data in year_data])
+        chart.set_pie_labels([data.party.shortname for data in year_data])
+    <img src="$chart.get_url()"/>
 
-<div id="heading">
-<h2>$d.name</h2>
+<!-- Breadcrumbs -->
+<div id="breadcrumbs">
+    <a href="/">Home</a> » <a href="/states">States</a> » $d.name
 </div>
 
-<table>
-    $for year in sorted(d.performance, reverse=True):
-        <tr>
-            <td>$year</td>
-            <td>
-                <table>
-                    <tr>
-                        <th>Party</th>
-                        <th>Contested</th>
-                        <th>Won</th>
-                    </tr>
-                $ year_data = sorted(d.performance[year], key=lambda row: row.won, reverse=True)
-                $for data in year_data:
-                    <tr>
-                        <td><a href="$data.party.id">$data.party.name</a></td>
-                        <td>$data.contested</td>
-                        <td>$data.won</td>
-                    </tr>
-                </table>                
-            </td>
-            <td>
-                $code:
-                    chart = PieChart(250, 100)
-                    chart.add_data([data.won for data in year_data])
-                    chart.set_pie_labels([data.party.shortname for data in year_data])
-                <img src="$chart.get_url()"/>
-            </td>
+<div id="facts">
+<h2>$d.name</h2>
+<table class="infoTable" cellspacing=0>
+    <tr class="header">
+        <th>Year</th>
+        <th>Party</th>
+        <th>Contested</th>
+        <th>Won</th>
+        <th>PI-Chart</th>
+    </tr>
+$for year in sorted(d.performance, reverse=True):
+    $ year_data = sorted(d.performance[year], key=lambda row: row.won, reverse=True)
+    $for data in year_data:
+        <tr class="$loop.parent.parity">
+        $if loop.first:
+            <td class="result" rowspan="$len(year_data)">$year</td>
+        <td class="result"><a href="$data.party.id">$data.party.name</a></td>
+        <td class="result">$data.contested</td>
+        <td class="result">$data.won</td>
+        $if loop.first:
+            <td class="result" rowspan="$len(year_data)">$:piechart(year_data)</td>
         </tr>
 </table>
+<div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
+</div>
+
+<!-- Map -->
+<div id="map">
+    <iframe src="$maproot/kmap.html?w=350&h=500&s=$d.id.lower()"></iframe>
+<div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
+</div>
+<!-- Map ends -->

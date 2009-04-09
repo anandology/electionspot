@@ -2,12 +2,8 @@ $def with (d)
 
 $var title: $d.name
 
-<iframe id="map" src="$maproot/kmap.html">
-</iframe>
-
-<div id="heading">
+<div id="facts">
 <h2>$d.name</h2>
-</div>
 
 <div id="photo"></div>
 
@@ -34,4 +30,15 @@ $if d.election_history:
 	        <td>$(["No", "Yes"][e.won])</td>
 	    </tr>
 	</table>
-<div>
+	</div>
+
+</div>
+<!-- Facts end -->
+
+
+<!-- Map -->
+<div id="map">
+	<iframe id="map" src="$maproot/kmap.html">
+	</iframe>
+</div>
+<!-- Map ends -->
