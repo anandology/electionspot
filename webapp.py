@@ -29,8 +29,7 @@ tglobals = {
     "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
     "PieChart": pygooglechart.PieChart2D,
 }
-# render = utils.Render("templates", base="layout", globals=tglobals)
-render = utils.Render("templates", base="es_layout", globals=tglobals)
+render = utils.Render("templates", base="layout", globals=tglobals)
 app.notfound = lambda: web.notfound(render.notfound(""))
 
 class redirect:
