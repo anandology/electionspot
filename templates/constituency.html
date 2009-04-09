@@ -4,14 +4,13 @@ $var title: $d.name
 
 <!-- Breadcrumbs -->
 <div id="breadcrumbs">
-	<a href="/">Home</a> » <a href="/states">States</a> » <a href="/$d.state.id">$d.state.name</a> » $d.name'
+	<a href="/">Home</a> » <a href="/states">States</a> » <a href="/$d.state.id">$d.state.name</a> » $d.name
 </div>
 <!-- Breadcrumbs end -->
 
-<!-- Facts -->
 <div id="facts">
-<h2>$d.name</h2>
-<p class='subtitle'> Parliamentary Constituency</p>
+<h2>$d.name, <a href="/$d.state.id.lower()">$d.state.name</a></h2>
+<div class='subtitle'> Parliamentary Constituency</div>
 
 <div class="section" id="profile">
 	<ul>
@@ -59,20 +58,14 @@ $if d.election_history:
 			</tr>
 		<tr><td colspan="4" class="rule" >&nbsp;</td></tr>
     </table>
-
+    <div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
 <div>
-    Developers: Get page in <a href="${d.id}.json">JSON</a>.
 </div>
 
-
 </div>
-<!-- Facts end -->
 
-
-<!-- Map -->
 <div id="map">
-	<iframe id="map" src="$maproot/kmap.html?w=350&h=500&s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
-	</iframe>
-
+<iframe src="$maproot/kmap.html?w=350&h=500&s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
+</iframe>
+<div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
 </div>
-<!-- Map ends -->
