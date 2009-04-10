@@ -1,9 +1,6 @@
 $def with (d)
 
-<!--
-<iframe id="map" src="$maproot/kmap.html">
-</iframe>
--->
+$var title: $d.name
 
 $code:
     ymax = max(p.contested for p in d.performance)
@@ -22,20 +19,21 @@ $code:
         
     ymax = ystep * (1 + ymax/ystep)
     
-    chart = GroupedVerticalBarChart(400, 200, y_range=(0, ymax))
+    chart = GroupedVerticalBarChart(350, 200, y_range=(0, ymax))
     chart.set_bar_width(10)
     chart.add_data([p.contested for p in d.performance][::-1])
     chart.add_data([p.won for p in d.performance][::-1])
     chart.set_legend(["Contested", "Won"])
-    chart.set_colours(['00ff00', 'ff0000'])
+    chart.set_colours(['f67b00', '00ff00'])
     chart.set_axis_labels("x", [p.year for p in d.performance][::-1])
     chart.set_axis_labels("y", range(0, ymax+1, ystep))
 
 <!-- Facts -->
 <div id="facts">
 <h2>$d.name</h2>
+<div class="subtitle">Political Party</div>
 
-<table class="infoTable">
+<table class="infoTable" cellspacing=0>
     <tr class="header">
         <th>Year</th>
         <th>Contested</th>
@@ -47,12 +45,13 @@ $code:
             <td class="result">$p.year</td>
             <td class="result">$p.contested</td>
             <td class="result">$p.won</td>
-            <td rowspan="$len(d.performance)">
             $if loop.first:
+                <td rowspan="$len(d.performance)">
                 <img src="$chart.get_url()"/>
-            </td>
+                </td>
         </tr>
 </table>
+<div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
 
 </div>
 <!-- Facts end -->

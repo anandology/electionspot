@@ -5,8 +5,8 @@ $def with (results, nmatched, page)
 Matched $nmatched records.<br/><br/>
 
 $for d in results:
-    <div class="result">
-        <a href="/$d.id">$d.name</a>
+    <div class="searchresult">
+        <a href="/$d.id">$d.name</a><span class='subtitle'>($d.type)</span>
     </div>
 
 <div class="pagination">

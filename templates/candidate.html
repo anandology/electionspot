@@ -10,7 +10,7 @@ $var title: $d.name
 $if d.election_history:
 	<div id="election_history" class="section">
 	<h4>Election History</h4>
-	<table>
+	<table class="infoTable" cellspacing=0>
 	    <tr class="header">
 	        <th>year</th>
 	        <th>party</th>
@@ -22,7 +22,8 @@ $if d.election_history:
 	    <tr class="$loop.parity">
 	        <td>$e.year</td>
 	        <td>
-    			<a href="/$e.party.id"><img src="/static/images/${e.party.id}.jpg"/></a>
+    			$#<a href="/$e.party.id"><img src="/static/images/${e.party.id}.jpg"/></a>
+    			<a href="/$e.party.id"><img src="/static/images/bjp.gif"/></a>
     			<a href="/$e.party.id">$e.party.name</a>	           
 	        </td>
 	        <td><a href="/$e.constituency.id">$e.constituency.name</a></td>

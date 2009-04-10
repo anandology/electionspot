@@ -10,7 +10,7 @@ $var title: $d.name
 
 <div id="facts">
 <h2>$d.name, <a href="/$d.state.id.lower()">$d.state.name</a></h2>
-<div class='subtitle'> Parliamentary Constituency</div>
+<div class='subtitle'>Parliamentary Constituency.</div>
 
 <div class="section" id="profile">
 	<ul>
@@ -47,16 +47,14 @@ $if d.election_history:
 		$for c in election.candidates:
 			<tr class="$loop.parent.parity">
 			$if loop.first:
-				<td class='result' rowspan="2">$election.year</td>
+				<td class='result first' rowspan="2">$election.year</td>
 			<td class='result'>
 			$#<a href="/$c.party.id"><img class='party-symbol' src="/static/images/${c.party.id}.jpg"/></a>
-			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/><!--for now -->
-			$c.party.name</a>
+			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/>$c.party.name</a>
 			</td>
 			<td><a href="/$c.id">$prettify(c.name)</a></td>
 			<td>$c.percentage_votes_polled</td>
 			</tr>
-		<tr><td colspan="4" class="rule" >&nbsp;</td></tr>
     </table>
     <div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
 <div>

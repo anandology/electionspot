@@ -9,6 +9,7 @@ import search
 
 urls = (
     "/", "home",
+    "/about", "about",
     "/search", "do_search",
     "(/.*)/", "redirect",
     "/party", "parties",
@@ -77,6 +78,10 @@ class do_search:
             raise web.seeother(results[0].id)
         else:
             return render.search(results, nmatched, page)
+
+class about:
+    def GET(self):
+        return render.about({})
 
 if __name__ == "__main__":
     app.run()
