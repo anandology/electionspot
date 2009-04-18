@@ -2,9 +2,15 @@ $def with (d)
 
 $var title: $d.name
 
+$def party(p):
+    <a href="/$c.party.id"><img class="party-logo"
+        src="/static/images/${c.party.id}.gif"
+        onerror="this.src = '/static/images/notfound.gif';"/></a>
+    <a href="/$c.party.id">$c.party.shortname</a>
+
 <!-- Breadcrumbs -->
 <div id="breadcrumbs">
-	<a href="/">Home</a> » <a href="/states">States</a> » <a href="/$d.state.id">$d.state.name</a> » $d.name
+    <a href="/">Home</a> » <a href="/states">States</a> » <a href="/$d.state.id">$d.state.name</a> » $d.name
 </div>
 <!-- Breadcrumbs end -->
 
@@ -13,12 +19,12 @@ $var title: $d.name
 <div class='subtitle'>Parliamentary Constituency.</div>
 
 <div class="section" id="profile">
-	<ul>
-		$if d.stats:
-			<li>No.of Voters: $d.stats.numvoters</li>
-			<li>Male-Female ratio: $d.stats.ratio_of_male_female_voters</li>
-			<li>Literacy(%): $d.stats.percentage_literacy</li>
-		</ul>
+    <ul>
+        $if d.stats:
+          <li>No.of Voters: $d.stats.numvoters</li>
+	  <li>Male-Female ratio: $d.stats.ratio_of_male_female_voters</li>
+	  <li>Literacy(%): $d.stats.percentage_literacy</li>
+    </ul>
 </div>
 
 $def prettify(id):
@@ -28,33 +34,27 @@ $if d.upcoming_elections:
 	<h4>Upcoming Elections, $d.upcoming_elections.date</h4>
 	<p>List of candidates</p>
 	<table>
-	<tr><th>Party</th><th>Candidate</th></tr>
-	$for c in d.upcoming_elections.candidates:
-		<tr>
-		<td>
-		<a href="/$c.party.id"><img src="/static/images/${c.party.id}.jpg"/></a>
-		<a href="/$c.party.id">$c.party.shortname</a>
-		</td>
-		<td><a href="/candidate/$c.id">$c.name</a></td>
-		</tr>
-	</table>
-	
+    <tr><th>Party</th><th>Candidate</th></tr>
+    $for c in d.upcoming_elections.candidates:
+        <tr>
+        <td>$:party(c.party)</td>
+       <td><a href="/candidate/$c.id">$c.name</a></td>
+        </tr>
+    </table>
+    
 $if d.election_history:
-	<h3 class='section-label'>Election History</h3>
-	<table class="infoTable" cellspacing=0>
-	    <tr class="header"><th>Year</th><th>Party</th><th>Candidate</th><th>Votes(%)</th></tr>
-	$for election in d.election_history:
-		$for c in election.candidates:
-			<tr class="$loop.parent.parity">
-			$if loop.first:
-				<td class='result first' rowspan="2">$election.year</td>
-			<td class='result'>
-			$#<a href="/$c.party.id"><img class='party-symbol' src="/static/images/${c.party.id}.jpg"/></a>
-			<a href="/$c.party.id"><img class='party-symbol' src="/static/images/bjp.gif"/>$c.party.name</a>
-			</td>
-			<td><a href="/$c.id">$prettify(c.name)</a></td>
-			<td>$c.percentage_votes_polled</td>
-			</tr>
+    <h3 class='section-label'>Election History</h3>
+    <table class="infoTable" cellspacing=0>
+        <tr class="header"><th>Year</th><th>Party</th><th>Candidate</th><th>Votes(%)</th></tr>
+    $for election in d.election_history:
+        $for c in election.candidates:
+            <tr class="$loop.parent.parity">
+            $if loop.first:
+                <td class='result first' rowspan="2">$election.year</td>
+            <td class='result'>$:party(c.party)</td>
+            <td><a href="/$c.id">$prettify(c.name)</a></td>
+            <td>$c.percentage_votes_polled</td>
+            </tr>
     </table>
     <div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
 <div>

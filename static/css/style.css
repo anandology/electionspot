@@ -233,3 +233,8 @@ div .searchresult a {
     float: left;
     width: 200px;
 }
+
+.party-logo {
+    width: 20px;
+    height: 20px;
+}
