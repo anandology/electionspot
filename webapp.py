@@ -6,6 +6,7 @@ import urllib
 import utils
 import db
 import search
+import config
 
 urls = (
     "/", "home",
@@ -23,7 +24,7 @@ app = web.application(urls, globals())
 app.add_processor(web.loadhook(utils.json_processor))
 
 tglobals = {
-    "maproot": "http://122.170.127.7/KMAP",
+    "maproot": config.maproot,
     "sorted": sorted,
     "str": str,
     "changequery": web.changequery,
