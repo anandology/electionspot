@@ -33,6 +33,7 @@ tglobals = {
 render = web.template.render("templates", base="layout", globals=tglobals)
 app.notfound = lambda: web.notfound(render.notfound(""))
 app.add_processor(utils.json_processor)
+app.add_processor(utils.cache_processor)
 
 class redirect:
     def GET(self, path):

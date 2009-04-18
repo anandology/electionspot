@@ -1,5 +1,6 @@
 import web
 import simplejson
+import re
 
 def json_processor(handler):
     if web.ctx.path.endswith('.json'):
@@ -10,4 +11,31 @@ def json_processor(handler):
         return simplejson.dumps(d)
     else:
         return handler()
-        
+
+cache = {}        
+
+re_accepts_gzip = re.compile(r'\bgzip\b')
+
+def cache_processor(handler):
+    """cache and gzip processor. 
+    Inspired by django.middleware.gzip.GZipMiddleware
+    """
+    ae = web.ctx.env.get('HTTP_ACCEPT_ENCODING', '')
+    if web.ctx.method in ["GET", "GET_json"] and re_accepts_gzip.search(ae):
+        if web.ctx.path not in cache:
+            data = handler()
+            cache[web.ctx.path] = compress(web.safestr(data))
+        web.expires(3600) # one hour
+        web.header('Content-Encoding', 'gzip')
+        return cache[web.ctx.path]
+    else:
+        return handler()
+
+def compress(data):
+    from cStringIO import StringIO
+    import gzip
+    f = StringIO()
+    gz = gzip.GzipFile(fileobj=f, mode='wb')
+    gz.write(data)
+    gz.flush()
+    return f.getvalue()
