@@ -24,10 +24,10 @@ def cache_processor(handler):
     if web.ctx.method in ["GET", "GET_json"] and re_accepts_gzip.search(ae):
         if web.ctx.path not in cache:
             data = handler()
-            cache[web.ctx.path] = compress(web.safestr(data))
+            cache[web.ctx.fullpath] = compress(web.safestr(data))
         web.expires(3600) # one hour
         web.header('Content-Encoding', 'gzip')
-        return cache[web.ctx.path]
+        return cache[web.ctx.fullpath]
     else:
         return handler()
 
