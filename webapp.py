@@ -21,7 +21,6 @@ urls = (
 )
 
 app = web.application(urls, globals())
-app.add_processor(web.loadhook(utils.json_processor))
 
 tglobals = {
     "maproot": config.maproot,
@@ -31,8 +30,9 @@ tglobals = {
     "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
     "PieChart": pygooglechart.PieChart2D,
 }
-render = utils.Render("templates", base="layout", globals=tglobals)
+render = web.template.render("templates", base="layout", globals=tglobals)
 app.notfound = lambda: web.notfound(render.notfound(""))
+app.add_processor(utils.json_processor)
 
 class redirect:
     def GET(self, path):
@@ -51,24 +51,34 @@ class party:
         d = db.get_party(name)
         return render.party(d)
 
+    def GET_json(self, name):
+        return db.get_party(name)
+
 class candidate:
     def GET(self, name):
         d = db.get_candidate(name)
         if d is None:
             raise web.seeother('/search?' + urllib.urlencode(dict(q=name.replace('_', ' '))))
         return render.candidate(d)
-        
+
+    def GET_json(self, name):
+        d = db.get_candidate(name)
+        if d is None:
+            raise web.notfound()
+        return d
 
 class state:
     def GET(self, name):
         d = db.get_state(name)
-        print >> web.debug, d
         return render.state(d)
 
 class constituency:
     def GET(self, state, name):
         d = db.get_constituency(state, name)
         return render.constituency(d)
+
+    def GET_json(self, state, name):
+        d = db.get_constituency(state, name)
 
 class do_search:
     def GET(self):
