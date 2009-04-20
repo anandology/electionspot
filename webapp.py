@@ -79,6 +79,8 @@ class candidate:
 class state:
     def GET(self, name):
         d = db.get_state(name)
+        if d is None:
+            raise web.notfound()
         return render.state(d)
 
 class constituency:
