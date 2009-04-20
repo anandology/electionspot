@@ -8,11 +8,17 @@ $def party(p):
         onerror="this.src = '/static/images/notfound.gif';"/></a>
     <a href="/$c.party.id">$c.party.shortname</a>
 
-<!-- Breadcrumbs -->
-<div id="breadcrumbs">
-    <a href="/">Home</a> » <a href="/states">States</a> » <a href="/$d.state.id">$d.state.name</a> » $d.name
+<div id="map">
+  <iframe src="$maproot/kmap.html?w=350&h=400&s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
+  </iframe>
+  <div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
+
+  <h3>Constituencies in $d.state.name</h3>
+  $for c in list_constituencies(d.state.id):
+      $if not loop.first: |
+      $if c.id == d.id: <b>$c.name</b>
+      $else: <a href="/$c.id">$c.name</a>
 </div>
-<!-- Breadcrumbs end -->
 
 <div id="facts">
 <h2>$d.name, <a href="/$d.state.id.lower()">$d.state.name</a></h2>
@@ -62,8 +68,3 @@ $if d.election_history:
 
 </div>
 
-<div id="map">
-<iframe src="$maproot/kmap.html?w=350&h=500&s=$d.state.id.lower()&c=$d.id.split('/')[-1]">
-</iframe>
-<div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
-</div>

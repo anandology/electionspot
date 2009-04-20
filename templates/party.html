@@ -28,7 +28,13 @@ $code:
     chart.set_axis_labels("x", [p.year for p in d.performance][::-1])
     chart.set_axis_labels("y", range(0, ymax+1, ystep))
 
-<!-- Facts -->
+<div id="map">
+  <iframe src="$maproot/kmap.html?w=350&h=400"></iframe>
+  <div class="disclaimer">
+    Map provided by <a href="http://www.gslab.com/">GS Lab</a>
+  </div>
+</div>
+
 <div id="facts">
 <h2>$d.name</h2>
 <div class="subtitle">Political Party</div>
@@ -54,12 +60,3 @@ $code:
 <div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
 
 </div>
-<!-- Facts end -->
-
-
-<!-- Map -->
-<div id="map">
-	<iframe id="map" src="$maproot/kmap.html?w=350&h=500"></iframe>
-<div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
-</div>
-<!-- Map ends -->

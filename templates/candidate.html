@@ -2,8 +2,14 @@ $def with (d)
 
 $var title: $d.name
 
+<div id="map">
+  <iframe src="$maproot/kmap.html?w=350&h=400"> 
+  </iframe>
+  <div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
+</div>
+
 <div id="facts">
-<h2>$d.name</h2>
+  <h2>$d.name</h2>
 
 <div id="photo"></div>
 
@@ -33,10 +39,4 @@ $if d.election_history:
 	</table>
     <div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
     </div>
-</div>
-
-<div id="map">
-	<iframe src="$maproot/kmap.html">
-	</iframe>
-    <div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
 </div>

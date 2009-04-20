@@ -29,6 +29,9 @@ tglobals = {
     "changequery": web.changequery,
     "GroupedVerticalBarChart": pygooglechart.GroupedVerticalBarChart,
     "PieChart": pygooglechart.PieChart2D,
+    "list_states": db.list_states,
+    "list_parties": db.list_parties,
+    "list_constituencies": db.list_constituencies,
 }
 render = web.template.render("templates", base="layout", globals=tglobals)
 app.notfound = lambda: web.notfound(render.notfound(""))
@@ -50,10 +53,15 @@ class parties:
 class party:
     def GET(self, name):
         d = db.get_party(name)
+        if d is None:
+            raise web.notfound()
         return render.party(d)
 
     def GET_json(self, name):
-        return db.get_party(name)
+        d = db.get_party(name)
+        if d is None:
+            raise web.notfound()
+        return d
 
 class candidate:
     def GET(self, name):
@@ -76,10 +84,15 @@ class state:
 class constituency:
     def GET(self, state, name):
         d = db.get_constituency(state, name)
+        if d is None:
+            raise web.notfound()
         return render.constituency(d)
 
     def GET_json(self, state, name):
         d = db.get_constituency(state, name)
+        if d is None:
+            raise web.notfound()
+        return d
 
 class do_search:
     def GET(self):

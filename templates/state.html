@@ -9,9 +9,20 @@ $def piechart(year_data):
         chart.set_pie_labels([data.party.shortname for data in year_data])
     <img src="$chart.get_url()"/>
 
-<!-- Breadcrumbs -->
-<div id="breadcrumbs">
-    <a href="/">Home</a> » <a href="/states">States</a> » $d.name
+<div id="map">
+    <iframe src="$maproot/kmap.html?w=350&h=400&s=$d.id.lower()"></iframe>
+    <div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
+    <h3>Constituencies in $d.name</h3>
+    $for c in list_constituencies(d.id):
+        $if not loop.first: |
+        <a href="/$c.id">$c.name</a>
+    <div>
+        <h3>States/Union Teritories</h3>
+        $for s in list_states():
+            $if not loop.first: |
+            $if s.id == d.id: <b>$s.name</b>
+            $else: <a href="/$s.id">$s.name</a>
+    </div>
 </div>
 
 <div id="facts">
@@ -40,9 +51,3 @@ $for year in sorted(d.performance, reverse=True):
 <div class="disclaimer">Election data from <a href="http://eci.nic.in">http://eci.nic.in</a></div>
 </div>
 
-<!-- Map -->
-<div id="map">
-    <iframe src="$maproot/kmap.html?w=350&h=500&s=$d.id.lower()"></iframe>
-<div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
-</div>
-<!-- Map ends -->

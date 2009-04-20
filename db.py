@@ -33,13 +33,19 @@ def storify(d):
         return d
         
 def list_parties():
-    result = getdb().query("SELECT * FROM party").list()
+    result = getdb().query("SELECT * FROM party ORDER BY shortname").list()
     for row in result:
         row.id = "party/" + row.id
     return result
-    
-def list_constituencies():
-    pass
+
+def list_states():
+    return getdb().query("SELECT * FROM state ORDER BY union_teritory, name").list()
+
+def list_constituencies(state_id):
+    result = getdb().query("SELECT * FROM constituency WHERE state=$state_id ORDER BY name", vars=locals()).list()
+    for row in result:
+        row.id = state_id + "/" + row.id
+    return result
 
 def get_party(id):
     def parse(d):

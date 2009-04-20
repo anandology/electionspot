@@ -2,6 +2,8 @@ import web
 import simplejson
 import re
 
+import config
+
 def json_processor(handler):
     if web.ctx.path.endswith('.json'):
         web.ctx.path = web.ctx.path[:-len(".json")]
@@ -21,7 +23,7 @@ def cache_processor(handler):
     Inspired by django.middleware.gzip.GZipMiddleware
     """
     ae = web.ctx.env.get('HTTP_ACCEPT_ENCODING', '')
-    if web.ctx.method in ["GET", "GET_json"] and re_accepts_gzip.search(ae):
+    if config.cache and web.ctx.method in ["GET", "GET_json"] and re_accepts_gzip.search(ae):
         if web.ctx.path not in cache:
             data = handler()
             cache[web.ctx.fullpath] = compress(web.safestr(data))

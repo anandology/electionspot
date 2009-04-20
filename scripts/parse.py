@@ -54,11 +54,24 @@ def extract_text(soup):
     return ''.join([htmlunquote(str(e).strip()) for e in soup.recursiveChildGenerator() if isinstance(e,unicode)])
 
 def parse_table(table):
-    return [[extract_text(td) for td in tr.findAll("td")] for tr in table.findAll("tr")]
+    return [[extract_text(td) for td in tr.findAll("td")] for tr in table.findAll(["tr", "tr ", "tr  "])]
 
 def extract_tables(filename):
     soup = BeautifulSoup(open(filename).read())
     return [parse_table(t) for t in soup.findAll("table")]
+
+def parse_affidavit(filename):
+    """Parse affidavit data from myneta.info
+    """
+    soup = BeautifulSoup(open(filename).read())
+
+    for t in soup.findAll(["h2", "h3", "table"]):
+        if t.name in ["h2", "h3"]:
+            print "---"
+            print "**", extract_text(t)
+            print
+        elif t.name == "table":
+            pprint.pprint(parse_table(t))
 
 def parse_summary(filename):
     """Parse election analysis summary file..
@@ -143,7 +156,9 @@ def main(filetype, filename):
     elif filetype == "summary":
         print simplejson.dumps(parse_election_analysis(filename), indent=4)
     elif filetype == "report":
-        print simplejson.dumps(parse_report(filetype), indent=4)
+        print simplejson.dumps(parse_report(filename), indent=4)
+    elif filetype == "affidavit":
+        print simplejson.dumps(parse_affidavit(filename), indent=4)
     elif filetype == "summary_json":
         print parse_summary_json(filename)
     else:

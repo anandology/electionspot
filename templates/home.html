@@ -2,15 +2,42 @@ $def with (d)
 
 $var title: Welcome
 
+<div id="map">
+  <iframe src="$maproot/kmap.html?w=350&h=400"></iframe>
+  <div class="disclaimer">Map provided by <a href="http://www.gslab.com/">GS Lab</a></div>
+
+  <div>
+    <h3>States/Union Teritories</h3>
+    $for s in list_states():
+    $if not loop.first: |
+    <a href="/$s.id">$s.name</a>
+  </div>
+</div>
 
 <div id="facts">
-<h2>India</h2>
+<h2>Welcome</h2>
 
-Summary comes here.
+  <p>
+  electionspot.in is a small beginning towards providing information on
+  the Indian elections freely and openly on the Internet. Most of the
+  data currently on this site is from reports of the election
+  commission. These were hitherto embedded volumes in pdf
+  documents. We have crawlled the data, parsed it, curated it and
+  presented present them in tables, charts and maps that will be
+  intuitive and attractive to the common man.
+  </p>
+  
+  <p>
+  The data deployed on the site is freely available to all using JSON
+  APIs.
+  </p>
 
+  <p>
+  Our motives go beyond the current elections. We believe we have a
+  platform and technology where we can attractive provide data on the
+  Indian sub-continent for strengthening the Indian democratic
+  system. We solicit collaboration and cooperation of individuals,
+  interested groups, NGOS, Government and corporates.
+  </p>
+  
 </div>
-<!-- Map -->
-<div id="map">
-	<iframe id="map" src="$maproot/kmap.html?w=350&h=500"></iframe>
-</div>
-<!-- Map ends -->

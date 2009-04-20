@@ -2,47 +2,35 @@ $def with (page)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
-	<head>
-		<link rel="stylesheet" href="/static/css/style.css"/>
-    	<title>$page.get("title", "Welcome") - Electionspot</title>
-	</head>
-	<body>
-		<!-- Wrapper -->
-		<div id="wrapper">
-			<!-- Header -->
-			<div id="header">
-				<div id="branding">
-					<a href="/"><img src="/static/images/logo.png" alt="Election Spot"></a>
-					<div id="byline">Information on Election Constituencies in India</div>
-				</div>
-				
-				<div id="searchBox">
-					<form action="/search">
-						<input type="text" name="q" class="searchInput" />
-						<input type="submit" value="Search" />
-					</form>
-				</div>
-			</div>
-			<!-- Header ends -->
-			<!-- Menu -->
-			<div id="menu">
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="/about">About</a></li>
-					<!--<li><a href="states.html">States &amp; Union Territories</a></li>
-					<li><a href="list.html">Alphabetical List of Lok Sabha Constituencies</a></li>-->
-				</ul>
-			</div>
-			<!-- Menu ends -->
-			<!-- Content -->
-			<div id="content">
-				$:page
-			</div>
-			<!-- Content ends -->
-			<!-- Footer -->
-			<br style="clear:both;"/>
-			<!-- Footer ends -->
-		</div>
-		<!-- Wrapper ends -->
-	</body>
+  <head>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <title>$page.get("title", "Welcome") - Electionspot</title>
+  </head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <div id="branding">
+        <a href="/"><img src="/static/images/logo.png" alt="Election Spot"></a>
+        <div id="byline">Information on Election Constituencies in India</div>
+      </div>
+
+      <div id="searchBox">
+	<form action="/search">
+	<input type="text" name="q" class="searchInput" />
+	<input type="submit" value="Search" />
+	</form>
+      </div>
+    </div>
+    <div id="menu">
+      <ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="/about">About</a></li>
+      </ul>
+    </div>
+   <div id="content">
+      $:page
+      <br style="clear:both;"/>
+    </div>
+  </div>
+</body>
 </html>
