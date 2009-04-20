@@ -39,12 +39,15 @@ def list_parties():
     return result
 
 def list_states():
-    return getdb().query("SELECT * FROM state ORDER BY union_teritory, name").list()
+    result = getdb().query("SELECT * FROM state ORDER BY union_teritory, name").list()
+    for row in result:
+        row.id = row.id.lower()
+    return result
 
 def list_constituencies(state_id):
     result = getdb().query("SELECT * FROM constituency WHERE state=$state_id ORDER BY name", vars=locals()).list()
     for row in result:
-        row.id = state_id + "/" + row.id
+        row.id = state_id.lower() + "/" + row.id
     return result
 
 def get_party(id):

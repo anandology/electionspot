@@ -9,8 +9,8 @@ $var title: Welcome
   <div>
     <h3>States/Union Teritories</h3>
     $for s in list_states():
-    $if not loop.first: |
-    <a href="/$s.id">$s.name</a>
+        $if not loop.first: |
+        <a href="/$s.id">$s.name</a>
   </div>
 </div>
 
